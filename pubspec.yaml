@@ -1,0 +1,33 @@
+name: sertifikasi_iqromabadi
+version: 1.0.0+1
+publish_to: none
+description: A new Flutter project.
+environment: 
+  sdk: '>=3.2.5 <4.0.0'
+
+dependencies: 
+  cupertino_icons: ^1.0.2
+  get: 4.6.6
+  flutter: 
+    sdk: flutter
+  firebase_auth: ^4.17.8
+  firebase_core: ^2.27.0
+  cloud_firestore: ^4.15.8
+  google_fonts: ^6.2.0
+  get_storage: ^2.1.1
+  image_picker: ^1.0.8
+  firebase_storage: ^11.6.9
+
+dev_dependencies: 
+  flutter_lints: ^2.0.0
+  flutter_test: 
+    sdk: flutter
+    
+
+
+flutter: 
+  assets:
+    - assets/
+
+  uses-material-design: true
+

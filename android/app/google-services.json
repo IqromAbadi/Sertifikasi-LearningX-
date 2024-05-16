@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "139724572850",
+    "project_id": "sertifikasi-c2580",
+    "storage_bucket": "sertifikasi-c2580.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:139724572850:android:f029fc883d134f2cd5a1ab",
+        "android_client_info": {
+          "package_name": "com.example.sertifikasi_iqromabadi"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBvACO4pZ3s6WgDBp0MNUeMu_Vp76p-c18"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
