@@ -5,70 +5,43 @@ import 'package:sertifikasi_iqromabadi/app/routes/app_pages.dart';
 
 class LoginController extends GetxController {
   FirebaseAuth auth = FirebaseAuth.instance;
-  TextEditingController usernameController = TextEditingController();
+  TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
   var passwordVisible = true.obs;
 
   Stream<User?> get streamAuthStatus =>
       FirebaseAuth.instance.authStateChanges();
 
-  void login() async {
-    final String email = usernameController.text.trim();
-    final String password = passwordController.text.trim();
-
-    if (email.isEmpty || password.isEmpty) {
-      Get.snackbar('Error', 'Semua Form harus diisi');
-      return;
-    }
-
+  void login(String email, String password) async {
     try {
       UserCredential userCredential = await auth.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
+          email: email, password: password);
       if (userCredential.user!.emailVerified) {
-        Get.snackbar('Berhasil', 'Pengguna berhasil masuk');
-        usernameController.clear();
-        passwordController.clear();
+        Get.snackbar('Success', 'User logged in successfully');
         Get.offAllNamed(Routes.HOME);
       } else {
-        Get.snackbar('Error', 'Harap verifikasi email Anda');
+        Get.snackbar('Error', 'Please verify your email');
       }
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
-        Get.snackbar(
-          'Error',
-          'Username yang diberikan salah.',
-        );
+        print('wrong email');
+        Get.snackbar('Error', 'No user found for that email.');
       } else if (e.code == 'wrong-password') {
-        Get.snackbar(
-          'Error',
-          'Password yang diberikan salah.',
-        );
+        print('wrong password');
+        Get.snackbar('Error', 'Wrong password provided for that user.');
       } else if (e.code == 'too-many-requests') {
-        Get.snackbar(
-          'Error',
-          'Terlalu banyak permintaan. Coba lagi nanti.',
-        );
-      } else {
-        Get.snackbar(
-          'Error',
-          'Terjadi kesalahan saat login. Silakan coba lagi nanti.',
-        );
-        print(e);
+        print('too-many-requests');
+        Get.snackbar('Error', 'Too many requests. Try again later.');
       }
+      print(e.code);
     } catch (e) {
-      Get.snackbar(
-        'Error',
-        'Terjadi kesalahan saat login. Silakan coba lagi nanti.',
-      );
       print(e);
     }
   }
 
   @override
   void onClose() {
-    usernameController.dispose();
+    emailController.dispose();
     passwordController.dispose();
     super.onClose();
   }

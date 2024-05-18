@@ -8,6 +8,7 @@ class HomeController extends GetxController {
   RxList<Item> items = <Item>[].obs;
 
   final namaController = TextEditingController();
+  final hargaController = TextEditingController();
   final tahunController = TextEditingController();
   final deskripsiController = TextEditingController();
 
@@ -20,6 +21,7 @@ class HomeController extends GetxController {
   @override
   void onClose() {
     namaController.dispose();
+    hargaController.dispose();
     tahunController.dispose();
     deskripsiController.dispose();
     super.onClose();
@@ -27,10 +29,13 @@ class HomeController extends GetxController {
 
   Future<void> simpanData(File imageFile) async {
     String nama = namaController.text.trim();
+    String harga = hargaController.text.trim();
+
     int tahun = int.tryParse(tahunController.text.trim()) ?? 0;
     String deskripsi = deskripsiController.text.trim();
 
     if (nama.isNotEmpty &&
+        harga.isNotEmpty &&
         tahun > 0 &&
         deskripsi.isNotEmpty &&
         imageFile.path.isNotEmpty) {
@@ -39,12 +44,14 @@ class HomeController extends GetxController {
 
         await FirebaseFirestore.instance.collection('items').add({
           'nama': nama,
+          'harga': harga,
           'tahun': tahun,
           'deskripsi': deskripsi,
           'imageUrl': imageUrl,
         });
 
         namaController.clear();
+        hargaController.clear();
         tahunController.clear();
         deskripsiController.clear();
 
@@ -76,12 +83,14 @@ class HomeController extends GetxController {
 
 class Item {
   final String nama;
+  final String harga;
   final int tahun;
   final String deskripsi;
   final String imageUrl;
 
   Item(
       {required this.nama,
+      required this.harga,
       required this.tahun,
       required this.deskripsi,
       required this.imageUrl});
@@ -90,6 +99,7 @@ class Item {
     Map data = doc.data() as Map;
     return Item(
       nama: data['nama'] ?? '',
+      harga: data['harga'] ?? '',
       tahun: data['tahun'] ?? 0,
       deskripsi: data['deskripsi'] ?? '',
       imageUrl: data['imageUrl'] ?? '',

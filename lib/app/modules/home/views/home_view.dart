@@ -37,7 +37,7 @@ class HomeView extends GetView<HomeController> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
           Expanded(
             child: Obx(
               () => ListView.builder(
@@ -45,16 +45,19 @@ class HomeView extends GetView<HomeController> {
                 itemBuilder: (context, index) {
                   var item = controller.items[index];
                   return ListTile(
-                    leading: Image.network(
-                      item.imageUrl,
-                      width: 100,
-                      height: 100,
-                      fit: BoxFit.cover,
+                    leading: Container(
+                      height: double.infinity,
+                      width: 150,
+                      child: Image.network(
+                        item.imageUrl,
+                        fit: BoxFit.cover,
+                      ),
                     ),
                     title: Text(item.nama),
                     subtitle: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
+                        Text('Harga Beli: ${item.harga}'),
                         Text('Tahun Beli: ${item.tahun}'),
                         Text('Deskripsi: ${item.deskripsi}'),
                       ],
@@ -134,6 +137,10 @@ class _AddItemDialogState extends State<AddItemDialog> {
             TextField(
               controller: widget.controller.namaController,
               decoration: const InputDecoration(labelText: 'Nama Barang'),
+            ),
+            TextField(
+              controller: widget.controller.hargaController,
+              decoration: const InputDecoration(labelText: 'Harga Beli'),
             ),
             TextField(
               controller: widget.controller.tahunController,
