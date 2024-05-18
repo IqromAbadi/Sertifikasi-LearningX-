@@ -43,7 +43,7 @@ class LoginView extends GetView<LoginController> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         TextField(
-                          controller: controller.usernameController,
+                          controller: controller.emailController,
                           cursorColor: const Color(0xffD9D9D9),
                           style: const TextStyle(
                             color: Color(0xffD9D9D9),
@@ -109,7 +109,10 @@ class LoginView extends GetView<LoginController> {
                           width: double.infinity,
                           height: 50,
                           child: ElevatedButton(
-                            onPressed: () => controller.login(),
+                            onPressed: () => controller.login(
+                              controller.emailController.text,
+                              controller.passwordController.text,
+                            ),
                             style: ElevatedButton.styleFrom(
                               backgroundColor: const Color(0xffD9D9D9),
                               shape: RoundedRectangleBorder(

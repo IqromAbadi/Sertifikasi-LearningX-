@@ -23,21 +23,21 @@ void main() async {
 class MyApp extends StatelessWidget {
   final authC = Get.put(LoginController(), permanent: true);
 
-  MyApp({super.key});
+  MyApp({Key? key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<User?>(
-      stream: authC.streamAuthStatus,
+      stream: FirebaseAuth.instance.authStateChanges(),
       builder: (context, snapshot) {
         if (snapshot.connectionState == ConnectionState.active) {
           print(snapshot);
           return GetMaterialApp(
             debugShowCheckedModeBanner: false,
             title: "Application",
-            initialRoute:
-                snapshot.data != null && snapshot.data!.emailVerified == true
-                    ? Routes.SPLASHSCREEN
-                    : Routes.HOME,
+            initialRoute: snapshot.data != null && snapshot.data!.emailVerified
+                ? Routes.HOME
+                : Routes.LOGIN,
             getPages: AppPages.routes,
           );
         }
